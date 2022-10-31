@@ -1,0 +1,9 @@
+const btnPressOut = ({buttonType, val}:any) => {
+  if (buttonType == btnTypes.first_btn) {
+    btnAnimate({buttonType: btnTypes.first_btn, val: 1})
+    btnTextAnimate({buttonType: btnTypes.first_btn, val: 1})
+  }
+  else if (buttonType == btnTypes.second_btn) {
+    btnAnimate({buttonType: btnTypes.second_btn, val: 1})
+  }
+}
