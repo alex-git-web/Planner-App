@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Dimensions, StyleSheet, Text, View, Image } from "react-native";
+import { colors } from "../../colors";
 import ButtonsButtom from "./components/screen_section/buttons_buttom/ButtonsButtom";
 import CaptionMiddle from "./components/screen_section/caption_middle/CaptionMiddle";
 import ImageTop from "./components/screen_section/image_top/ImageTop";
@@ -29,11 +30,12 @@ const SplashScreen: React.FC<PageProps> = () => {
 const styles = StyleSheet.create({
   container: {
     width: PAGE_WIDTH,
-    height: PAGE_HEIGHT * 0.98,
+    height: PAGE_HEIGHT,
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: 20,
     paddingVertical: '5%',
+    backgroundColor: colors.white
   },
  
 });
