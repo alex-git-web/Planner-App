@@ -3,13 +3,15 @@ import {
   SafeAreaView,
   StyleSheet,
 } from 'react-native';
-import SplashScreen from './components/SplashScreen/SplashScreen';
+import { Provider } from 'react-redux'
+import Main from './Main';
+import { store } from './redux/store';
 
 const App = () => {
   return (
-    <SafeAreaView style={styles.container}>
-      <SplashScreen />
-    </SafeAreaView>
+    <Provider store={store} >
+      <Main />
+    </Provider>
   );
 };
 
