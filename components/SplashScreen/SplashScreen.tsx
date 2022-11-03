@@ -23,7 +23,7 @@ const SplashScreen: React.FC<PageProps> = () => {
             <ScreenIndicator idScreen={idScreen} animation_duration={animation_duration} />
             <ButtonsButtom idScreen={idScreen} setIdScreen={setIdScreen} animation_duration={animation_duration} />
         </View>
-      </SafeAreaView>
+      </SafeAreaView> 
     );
 };
 
