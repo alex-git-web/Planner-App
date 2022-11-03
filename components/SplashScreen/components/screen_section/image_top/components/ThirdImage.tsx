@@ -55,7 +55,7 @@ const ThirdImage: React.FC<PageProps> = ({
   }
 
   const bigStarAnimate = () => {
-    top_bigStar.value = withTiming(0, {duration: animation_duration * 1.5 })
+    top_bigStar.value = withTiming(22, {duration: animation_duration * 1.5 })
     rotate_bigStar.value = withTiming(360, {duration: animation_duration * 1.7})
     // scale_bigStar.value = withTiming(1, {duration: animation_duration})
   }
@@ -98,8 +98,8 @@ const styles = StyleSheet.create({
   rocket_img: {
     position: 'absolute',
     zIndex: 2,
-    width: PAGE_WIDTH * 0.6,
-    height: PAGE_WIDTH * 0.6,
+    width: '70%',
+    height: '70%',
   },
   smallStars_img: {
     position: 'absolute',
@@ -112,8 +112,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     zIndex: 1,
     right: '37%',
-    width: PAGE_WIDTH * 0.2,
-    height: PAGE_WIDTH * 0.2,
+    width: '20%',
+    height: '20%',
   },
 });
 

@@ -75,16 +75,16 @@ const styles = StyleSheet.create({
     position: 'absolute',
     zIndex: 1,
     bottom: 0,
-    width: PAGE_WIDTH * 0.6,
-    height: PAGE_WIDTH * 0.6,
+    width: '70%',
+    height: '70%',
   },
   lines_img: {
     position: 'absolute',
     zIndex: 1,
-    top: '20%',
-    right: '25%',
-    width: PAGE_WIDTH * 0.2,
-    height: PAGE_WIDTH * 0.2,
+    top: '35%',
+    right: '24%',
+    width: '25%',
+    height: '25%',
   }
 });
 
