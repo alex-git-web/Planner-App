@@ -1,23 +1,18 @@
 import React from "react";
-import { StyleSheet, Text, View, Image, FlatList, Touchable, TouchableOpacity } from "react-native";
-import Animated from "react-native-reanimated";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { useDispatch } from "react-redux";
 import { colors } from "../../../../colors";
-import {PAGE_WIDTH, todoList } from "../../../SplashScreen/others/constants";
+import { setA } from "../../../../redux/slices/appState";
+import {PAGE_WIDTH, } from "../../../SplashScreen/others/constants";
 import TodoItem from "./TodoItem";
 
 interface PageProps {}
 
-const AddTodoBtn: React.FC<PageProps> = () => {
- 
-  const renderItem = (data:any) => {
-    return <TodoItem 
-      index={data.index}  
-      item={data.item} 
-    />
-  }
+const AddTodoBtn: React.FC<PageProps> = () => { 
+  const dispatch = useDispatch()
  
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={() => dispatch(setA(Date.now()))}>
       <Text style={styles.plus}>+</Text>
     </TouchableOpacity>
   );

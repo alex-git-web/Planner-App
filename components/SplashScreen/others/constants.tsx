@@ -2,9 +2,9 @@ import { Dimensions, ImageProps } from "react-native";
 import { images } from "../../../images";
 
 export const animation_duration = {
-    splash_screen_a_duration: 500,
-    showHomeScreen: 500,
-    todo_list_item: 500,
+    splash_screen_a_duration: 1000,
+    showHomeScreen: 1000,
+    todo_list_item: 1000,
 }
 
 export const bottom_tabs_height = 60
@@ -84,5 +84,19 @@ export const todoList = [
       direction: 'Don\'t forget to add a graph the...',
       eventDate: '10:30-11:00 PM',
       status: todoCompleteStatus.done
+    },
+    { 
+      id: 3, 
+      title: 'Send rept to Kristen',
+      direction: 'Don\'t forget to add a graph the...',
+      eventDate: '10:30-11:00 PM',
+      status: todoCompleteStatus.inProcess
+    },
+    { 
+      id: 4, 
+      title: 'Send rept to Kristen',
+      direction: 'Don\'t forget to add a graph the...',
+      eventDate: '10:30-11:00 PM',
+      status: todoCompleteStatus.inProcess
     },
   ]

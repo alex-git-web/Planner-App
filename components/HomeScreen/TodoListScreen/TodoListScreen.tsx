@@ -48,14 +48,13 @@ const TodoListScreen: React.FC<PageProps> = () => {
      if(!isMainAppPartLoaded) containerAnimate()
   }, [])
 
-
   return ( 
     <View style={[
       styles.container,
       { backgroundColor:  !isMainAppPartLoaded ? colors.orange : colors.white }
     ]}>
       <Animated.View style={[styles.content, null]}>
-        <Calendar />
+        {/* <Calendar /> */}
         <TodoList />
         <AddTodoBtn />
       </Animated.View>
