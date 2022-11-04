@@ -1,15 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import { RootState } from '../store'
 
 // Define a type for the slice state
 interface AppState {
     isSplashScreen: boolean
+    isHideSplashScreen: boolean
+    isMainAppPartLoaded: boolean
 }
 
 // Define the initial state using that type
 const initialState: AppState = {
-    isSplashScreen: false,
+    isSplashScreen: !true,
+    isHideSplashScreen: !false,
+    isMainAppPartLoaded: !false,
 }
 
 export const appStateSlice = createSlice({
@@ -20,10 +23,20 @@ export const appStateSlice = createSlice({
     setIsSplashScreen: (state, action: PayloadAction<boolean>) => {
       state.isSplashScreen = action.payload
     },
+    setIsHideSplashScreen: (state, action: PayloadAction<boolean>) => {
+      state.isHideSplashScreen = action.payload
+    },
+    setIsMainAppPartLoaded: (state, action: PayloadAction<boolean>) => {
+      state.isMainAppPartLoaded = action.payload
+    },
   },
 })
 
-export const { setIsSplashScreen, } = appStateSlice.actions
+export const { 
+  setIsSplashScreen, 
+  setIsHideSplashScreen, 
+  setIsMainAppPartLoaded 
+} = appStateSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 // export const selectCount = (state: RootState) => state.appState.isSplashScreen

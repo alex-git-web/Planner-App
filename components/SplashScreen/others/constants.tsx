@@ -1,5 +1,15 @@
-import { ImageProps } from "react-native";
+import { Dimensions, ImageProps } from "react-native";
 import { images } from "../../../images";
+
+export const animation_duration = {
+    splash_screen_a_duration: 500,
+    showHomeScreen: 500,
+    todo_list_item: 500,
+}
+
+export const bottom_tabs_height = 60
+
+export const { width: PAGE_WIDTH, height: PAGE_HEIGHT } = Dimensions.get("window");
 
 export interface IScreen { 
     id: number, 
@@ -46,3 +56,33 @@ export const SCREENS: IScreen[] = [
         second_btn_text: 'Skip',
     },
 ]
+
+export type todoItemType = {
+    id: number, 
+    title: string,
+    direction: string,
+    eventDate: string,
+    status: string
+} 
+
+export const todoCompleteStatus = {
+    done: '✓ Done',
+    inProcess: 'In process'
+}
+
+export const todoList = [
+    { 
+      id: 1, 
+      title: 'Learn English with teach',
+      direction: null,
+      eventDate: 'Every Tuesday',
+      status: todoCompleteStatus.inProcess
+    },
+    { 
+      id: 2, 
+      title: 'Send rept to Kristen',
+      direction: 'Don\'t forget to add a graph the...',
+      eventDate: '10:30-11:00 PM',
+      status: todoCompleteStatus.done
+    },
+  ]

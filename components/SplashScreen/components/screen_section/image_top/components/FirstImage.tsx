@@ -8,8 +8,6 @@ interface PageProps {
   animation_duration: number
 }
 
-const { width: PAGE_WIDTH, height: PAGE_HEIGHT } = Dimensions.get("window");
-
 const FirstImage: React.FC<PageProps> = ({
   idScreen,
   animation_duration,
@@ -52,10 +50,10 @@ const FirstImage: React.FC<PageProps> = ({
   return (
     <View style={styles.container}>
       <Animated.View style={[styles.earth_img, rEarthStyle]}>
-        <Image source={SCREENS[idScreen].images[0]} resizeMode="contain" style={styles.fillImg}/>
+        <Image source={SCREENS[idScreen].images[0]} resizeMode="stretch" style={styles.fillImg}/>
       </Animated.View>
       <Animated.View style={[styles.people_img, rPeopleStyle]}>
-        <Image source={SCREENS[idScreen].images[1]} resizeMode="contain" style={styles.fillImg}/>
+        <Image source={SCREENS[idScreen].images[1]} resizeMode="stretch" style={styles.fillImg}/>
       </Animated.View>
     </View>
   );
@@ -77,15 +75,15 @@ const styles = StyleSheet.create({
     zIndex: 1,
     bottom: 0,
     width: '70%',
-    height: '70%',
+    height: '80%',
   },
   people_img: {
     position: 'absolute',
     zIndex: 1,
-    top: '26%',
+    top: '15%',
     left: '27%',
     width: '40%',
-    height: '40%',
+    height: '45%',
   }
 });
 

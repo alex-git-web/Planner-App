@@ -1,11 +1,10 @@
 import React from "react";
 import { Dimensions, StyleSheet, Text, View, Image } from "react-native";
+import { PAGE_HEIGHT, PAGE_WIDTH } from "../../SplashScreen/others/constants";
 
 interface PageProps {
 
 }
-
-const { width: PAGE_WIDTH, height: PAGE_HEIGHT } = Dimensions.get("window");
 
 const TodoAddScreen: React.FC<PageProps> = () => {
 
@@ -27,7 +26,5 @@ const styles = StyleSheet.create({
   },
  
 });
-
-export { PAGE_WIDTH };
 
 export default TodoAddScreen;

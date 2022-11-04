@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
-import { Dimensions, StyleSheet, Text, View, Image } from "react-native";
-import Animated, { useAnimatedStyle, useSharedValue, withSpring, withTiming } from "react-native-reanimated";
+import { StyleSheet, Text, View, Image } from "react-native";
+import Animated, { useAnimatedStyle, useSharedValue, withRepeat, withSpring, withTiming } from "react-native-reanimated";
+import { useAppDispatch, useAppSelector } from "../../../../../../redux/hooks";
+import { setIsSplashScreen } from "../../../../../../redux/slices/appState";
 import { SCREENS } from "../../../../others/constants";
 
 interface PageProps {
@@ -8,12 +10,12 @@ interface PageProps {
   animation_duration: number
 }
 
-const { width: PAGE_WIDTH, height: PAGE_HEIGHT } = Dimensions.get("window");
-
 const ThirdImage: React.FC<PageProps> = ({
   idScreen,
   animation_duration,
 }) => {
+  const dispatch = useAppDispatch()
+
   const bottom_rocket = useSharedValue(-60)
   const right_rocket = useSharedValue(-60)
 
@@ -22,6 +24,9 @@ const ThirdImage: React.FC<PageProps> = ({
   const top_bigStar = useSharedValue(-60)
   const rotate_bigStar = useSharedValue(0)
   const scale_bigStar = useSharedValue(1)
+  const zIndex_bigStar = useSharedValue(0)
+
+  const isHideSplashScreen = useAppSelector((state) => state.appConfigure.isHideSplashScreen)
 
   const rRocketStyle = useAnimatedStyle(():any => {
     return {
@@ -42,7 +47,8 @@ const ThirdImage: React.FC<PageProps> = ({
       transform: [
         {rotate: `${rotate_bigStar.value}deg`},
         {scale: scale_bigStar.value},
-      ]
+      ],
+      zIndex: zIndex_bigStar.value
     }
   })
 
@@ -55,9 +61,24 @@ const ThirdImage: React.FC<PageProps> = ({
   }
 
   const bigStarAnimate = () => {
-    top_bigStar.value = withTiming(22, {duration: animation_duration * 1.5 })
-    rotate_bigStar.value = withTiming(360, {duration: animation_duration * 1.7})
-    // scale_bigStar.value = withTiming(1, {duration: animation_duration})
+    top_bigStar.value = withTiming(20, {duration: animation_duration * 1.5 })
+    rotate_bigStar.value = withTiming(350, {duration: animation_duration * 1.7})
+  }
+
+  const goToHomeScreen = () => {
+    const anim_factor = 1.3
+    // Scale "big star image"
+    zIndex_bigStar.value = 3
+    rotate_bigStar.value = withRepeat(
+      withTiming(0, {duration: animation_duration * anim_factor}),
+      1, true
+    )
+    scale_bigStar.value = withTiming(30, {duration: animation_duration * anim_factor})
+
+    // condition for showing "Home Screen"
+    setTimeout(() => { 
+      dispatch(setIsSplashScreen(false))
+    }, animation_duration * anim_factor)
   }
 
   useEffect(() => {
@@ -68,6 +89,10 @@ const ThirdImage: React.FC<PageProps> = ({
       bigStarAnimate()
     }, animation_duration);
   }, [])
+
+  useEffect(() => {
+    if (isHideSplashScreen) goToHomeScreen()
+  }, [isHideSplashScreen])
 
   return (
     <View style={styles.container}>
@@ -110,8 +135,7 @@ const styles = StyleSheet.create({
   },
   bigStar_img: {
     position: 'absolute',
-    zIndex: 1,
-    right: '37%',
+    right: '38%',
     width: '20%',
     height: '20%',
   },
