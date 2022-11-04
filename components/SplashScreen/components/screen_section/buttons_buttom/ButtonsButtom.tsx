@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Dimensions, StyleSheet, Text, View, Image, TouchableOpacity, Pressable } from "react-native";
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import { colors } from "../../../../../colors";
+import { useAppDispatch } from "../../../../../redux/hooks";
+import { setIsHideSplashScreen } from "../../../../../redux/slices/appState";
 import { SCREENS } from "../../../others/constants";
 
 interface PageProps {
@@ -38,6 +40,8 @@ const ButtonsButtom: React.FC<PageProps> = ({
 
   const scale_second_btn = useSharedValue(0)
   const opacity_second_btn_text = useSharedValue(1)
+
+  const dispatch = useAppDispatch()
 
   const rBtnStyle = [
     useAnimatedStyle(():any => { // first btn
@@ -96,7 +100,11 @@ const ButtonsButtom: React.FC<PageProps> = ({
 
   const btnPressEvent = ({buttonType}:any) => {
     if (buttonType == btnTypes.first_btn) {
-      setIdScreen(idScreen < 2 ? idScreen + 1 : 0)
+      if (idScreen < 2) setIdScreen(idScreen + 1)
+      else {
+        dispatch(setIsHideSplashScreen(true))
+      }
+      // setIdScreen(idScreen < 2 ? idScreen + 1 : 0)
 
       btnAnimate({
         buttonType: btnTypes.first_btn, 
@@ -179,6 +187,7 @@ const styles = StyleSheet.create({
     height: '19%',
     alignItems: "stretch",
     justifyContent: "space-between",
+    zIndex: -1
   },
   first_btn: {
     borderRadius: 20,

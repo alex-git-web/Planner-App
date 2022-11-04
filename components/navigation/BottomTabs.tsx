@@ -3,15 +3,19 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { BottomTabNavigatorParamList } from './types';
-import FilesScreen from '../FilesScreen/FilesScreen';
 import SettingsScreen from '../SettingsScreen/SettingsScreen';
 import HomeScreenStack from './HomeScreenStack';
 import { colors } from '../../colors';
+import FilesScreen from '../FilesScreen/FilesScreen';
+import { BottomTabNavigatorParamList } from './types';
+import { useAppSelector } from '../../redux/hooks';
+import { bottom_tabs_height } from '../SplashScreen/others/constants';
 
 const Tab = createBottomTabNavigator<BottomTabNavigatorParamList>();
 
 const BottomTabs = () => {
+    const isMainAppPartLoaded = useAppSelector(state => state.appConfigure.isMainAppPartLoaded)
+
     return (
         <Tab.Navigator
         initialRouteName='Home'
@@ -20,12 +24,12 @@ const BottomTabs = () => {
             tabBarShowLabel: false,
             tabBarStyle: {
                 position: 'absolute',
-                height: 60,
+                height: !isMainAppPartLoaded ? 0 : bottom_tabs_height,
                 alignContent: 'center',
-                paddingTop: 10,
-                paddingBottom: 10,
+                // paddingTop: 10,
+                // paddingBottom: 10,
                 backgroundColor: 'white',
-                shadowColor: 'black',
+                shadowColor: colors.black,
                 shadowOffset: {
                     width: 0,
                     height: 9,

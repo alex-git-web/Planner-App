@@ -1,3 +1,6 @@
+import React from "react"
+import GoldStarSvg from "./assets/svg/GoldStar"
+
 const url = './assets/images/'
 
 export const images = {

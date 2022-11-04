@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
     height: '23%',
     alignItems: "stretch",
     justifyContent: "space-between",
+    zIndex: -1
   },
   title: {},
   title_text: {

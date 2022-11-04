@@ -1,6 +1,6 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import TodoList from '../HomeScreen/components/TodoList';
+import TodoListScreen from '../HomeScreen/TodoListScreen/TodoListScreen';
 import TodoAddScreen from '../HomeScreen/TodoAddScreen/TodoAddScreen';
 import { HomeStackNavigatorParamList } from './types';
 
@@ -13,7 +13,7 @@ const HomeScreenStack = () => {
         headerShown: false
       })}
     >
-        <HomeStack.Screen name="TodoList" component={TodoList} />
+        <HomeStack.Screen name="TodoList" component={TodoListScreen} />
         <HomeStack.Screen name="TodoAdd" component={TodoAddScreen} />
     </HomeStack.Navigator>
   );

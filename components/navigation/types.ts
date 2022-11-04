@@ -5,10 +5,10 @@ export type HomeStackNavigatorParamList = {
   TodoAdd: undefined;
 };
 
-export type HomeScreenNavigationProp = NativeStackNavigationProp<
-  HomeStackNavigatorParamList,
-  'TodoAdd'
->;
+// export type HomeScreenNavigationProp = NativeStackNavigationProp<
+//   HomeStackNavigatorParamList,
+//   'TodoAdd'
+// >;
 
 export type BottomTabNavigatorParamList = {
   Files: undefined;

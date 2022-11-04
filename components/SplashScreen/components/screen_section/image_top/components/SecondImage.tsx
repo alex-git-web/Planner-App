@@ -1,14 +1,12 @@
 import React, { useEffect } from "react";
-import { Dimensions, StyleSheet, Text, View, Image } from "react-native";
-import Animated, { useAnimatedStyle, useSharedValue, withSpring, withTiming } from "react-native-reanimated";
+import { StyleSheet, View, Image } from "react-native";
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import { SCREENS } from "../../../../others/constants";
 
 interface PageProps {
   idScreen: number
   animation_duration: number
 }
-
-const { width: PAGE_WIDTH, height: PAGE_HEIGHT } = Dimensions.get("window");
 
 const SecondImage: React.FC<PageProps> = ({
   idScreen,
@@ -51,10 +49,10 @@ const SecondImage: React.FC<PageProps> = ({
   return (
     <View style={styles.container}>
       <Animated.View style={[styles.imgPart_img, rImgPartStyle]}>
-        <Image source={SCREENS[idScreen].images[0]} resizeMode="contain" style={styles.fillImg}/>
+        <Image source={SCREENS[idScreen].images[0]} resizeMode="stretch" style={styles.fillImg}/>
       </Animated.View>
       <Animated.View style={[styles.lines_img, rLinesStyle]}>
-        <Image source={SCREENS[idScreen].images[1]} resizeMode="contain" style={styles.fillImg}/>
+        <Image source={SCREENS[idScreen].images[1]} resizeMode="stretch" style={styles.fillImg}/>
       </Animated.View>
     </View>
   );
@@ -75,14 +73,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
     zIndex: 1,
     bottom: 0,
-    width: '70%',
-    height: '70%',
+    width: '55%',
+    height: '85%',
   },
   lines_img: {
     position: 'absolute',
     zIndex: 1,
-    top: '35%',
-    right: '24%',
+    top: '25%',
+    right: '23%',
     width: '25%',
     height: '25%',
   }
