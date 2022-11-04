@@ -14,7 +14,7 @@ const HomeScreen: React.FC<PageProps> = () => {
     <View style={styles.container}>
     
     </View>
-  );
+  ); 
 };
 
 const styles = StyleSheet.create({
