@@ -6,8 +6,6 @@ import { useAppSelector } from './redux/hooks';
 const Main = () => {
   const isSplashScreen = useAppSelector((state) => state.appConfigure.isSplashScreen)
 
-  console.log(isSplashScreen)
-
   if (isSplashScreen) return <SplashScreen />
   else return <Navigation />
 };

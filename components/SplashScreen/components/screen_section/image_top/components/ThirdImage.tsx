@@ -52,46 +52,43 @@ const ThirdImage: React.FC<PageProps> = ({
     }
   })
 
-  const rocketAnimate = () => {
-    bottom_rocket.value = withTiming(0, {duration: animation_duration * 1.3})
-    right_rocket.value = withTiming(10, {duration: animation_duration * 1.3})
-  }
-  const smallStarsAnimate = () => {
-    top_smallStars.value = withTiming(0, {duration: animation_duration * 1.5})
+  const rocketAnimate = (duration:number) => {
+    bottom_rocket.value = withTiming(0, {duration})
+    right_rocket.value = withTiming(10, {duration})
   }
 
-  const bigStarAnimate = () => {
-    top_bigStar.value = withTiming(20, {duration: animation_duration * 1.5 })
-    rotate_bigStar.value = withTiming(350, {duration: animation_duration * 1.7})
+  const smallStarsAnimate = (duration:number) => {
+    top_smallStars.value = withTiming(0, {duration})
   }
 
-  const goToHomeScreen = () => {
-    const anim_factor = 1.3
+  const bigStarAnimate = (duration:number) => {
+    top_bigStar.value = withTiming(20, {duration})
+    rotate_bigStar.value = withTiming(350, {duration})
+  }
+
+  const goToHomeScreen = (duration:number) => {
     // Scale "big star image"
     zIndex_bigStar.value = 3
-    rotate_bigStar.value = withRepeat(
-      withTiming(0, {duration: animation_duration * anim_factor}),
-      1, true
-    )
-    scale_bigStar.value = withTiming(30, {duration: animation_duration * anim_factor})
+    rotate_bigStar.value = withRepeat(withTiming(0, {duration}), 1, true)
+    scale_bigStar.value = withTiming(40, {duration})
 
     // condition for showing "Home Screen"
     setTimeout(() => { 
       dispatch(setIsSplashScreen(false))
-    }, animation_duration * anim_factor)
+    }, duration)
   }
 
   useEffect(() => {
-    rocketAnimate()
-    smallStarsAnimate()
+    rocketAnimate(animation_duration * 1.3)
+    smallStarsAnimate(animation_duration * 1.3)
 
     setTimeout(() => {
-      bigStarAnimate()
+      bigStarAnimate(animation_duration * 1.5)
     }, animation_duration);
   }, [])
 
   useEffect(() => {
-    if (isHideSplashScreen) goToHomeScreen()
+    if (isHideSplashScreen) goToHomeScreen(animation_duration * 1.5)
   }, [isHideSplashScreen])
 
   return (

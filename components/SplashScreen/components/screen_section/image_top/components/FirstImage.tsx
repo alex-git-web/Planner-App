@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Dimensions, StyleSheet, Text, View, Image } from "react-native";
-import Animated, { useAnimatedStyle, useSharedValue, withSpring, withTiming } from "react-native-reanimated";
+import Animated, { useAnimatedStyle, useSharedValue, withDelay, withSpring, withTiming } from "react-native-reanimated";
 import { SCREENS } from "../../../../others/constants";
 
 interface PageProps {
@@ -36,15 +36,15 @@ const FirstImage: React.FC<PageProps> = ({
   }
 
   const peopleAnimate = () => {
-    scale_people.value = withTiming(1, {duration: animation_duration})
+    scale_people.value = withDelay(
+      animation_duration,
+      withTiming(1, {duration: animation_duration})
+    ) 
   }
 
   useEffect(() => {
     earthAnimate()
-
-    setTimeout(() => {
-      peopleAnimate()
-    }, animation_duration);
+    peopleAnimate()
   }, [])
 
   return (
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     zIndex: 1,
     bottom: 0,
-    width: '70%',
+    width: '75%',
     height: '80%',
   },
   people_img: {
