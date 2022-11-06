@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { StyleSheet, View, Image } from "react-native";
-import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import Animated, { useAnimatedStyle, useSharedValue, withDelay, withTiming } from "react-native-reanimated";
 import { SCREENS } from "../../../../others/constants";
 
 interface PageProps {
@@ -35,15 +35,15 @@ const SecondImage: React.FC<PageProps> = ({
     scale_imgPart.value = withTiming(1, {duration: animation_duration})
   }
   const linesAnimate = () => {
-    scale_lines.value = withTiming(1, {duration: animation_duration})
+    scale_lines.value = withDelay(
+      animation_duration,
+      withTiming(1, {duration: animation_duration})
+    ) 
   }
 
   useEffect(() => {
     imgPartAnimate()
-
-    setTimeout(() => {
-      linesAnimate()
-    }, animation_duration);
+    linesAnimate()
   }, [])
 
   return (
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     zIndex: 1,
     bottom: 0,
-    width: '55%',
+    width: '60%',
     height: '85%',
   },
   lines_img: {

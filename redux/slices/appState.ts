@@ -6,15 +6,15 @@ interface AppState {
     isSplashScreen: boolean
     isHideSplashScreen: boolean
     isMainAppPartLoaded: boolean,
-    a: number
+    isShowAddTodoScreen: boolean
 }
 
 // Define the initial state using that type
 const initialState: AppState = {
-    isSplashScreen: true,
-    isHideSplashScreen: false,
-    isMainAppPartLoaded: false,
-    a: 0
+    isSplashScreen: !true,
+    isHideSplashScreen: !false,
+    isMainAppPartLoaded: !false,
+    isShowAddTodoScreen: false
 }
 
 export const appStateSlice = createSlice({
@@ -31,8 +31,8 @@ export const appStateSlice = createSlice({
     setIsMainAppPartLoaded: (state, action: PayloadAction<boolean>) => {
       state.isMainAppPartLoaded = action.payload
     },
-    setA: (state, action: PayloadAction<number>) => {
-      state.a = action.payload
+    setIsShowAddTodoScreen: (state, action: PayloadAction<boolean>) => {
+      state.isShowAddTodoScreen = action.payload
     },
   },
 })
@@ -41,7 +41,7 @@ export const {
   setIsSplashScreen, 
   setIsHideSplashScreen, 
   setIsMainAppPartLoaded,
-  setA,
+  setIsShowAddTodoScreen,
 } = appStateSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type

@@ -1,20 +1,36 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
-import { useDispatch } from "react-redux";
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import { colors } from "../../../../colors";
-import { setA } from "../../../../redux/slices/appState";
-import {PAGE_WIDTH, } from "../../../SplashScreen/others/constants";
-import TodoItem from "./TodoItem";
+import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
+import { setIsShowAddTodoScreen } from "../../../../redux/slices/appState";
+import {animation_duration, bottom_tabs_height, PAGE_WIDTH, } from "../../../SplashScreen/others/constants";
 
 interface PageProps {}
 
 const AddTodoBtn: React.FC<PageProps> = () => { 
-  const dispatch = useDispatch()
- 
+  const {home_screen_elements:a_duration} = animation_duration
+  const { isMainAppPartLoaded } = useAppSelector(state => state.appConfigure)
+
+  const dispatch = useAppDispatch()
+  const opacity = useSharedValue(0)
+
+  const rBtnStyle = useAnimatedStyle(() => {
+    return {
+      opacity: opacity.value
+    }
+  })
+
+  useEffect(() => {
+   if (isMainAppPartLoaded) opacity.value = withTiming(1, {duration: a_duration})
+  }, [isMainAppPartLoaded])
+
   return (
-    <TouchableOpacity style={styles.container} onPress={() => dispatch(setA(Date.now()))}>
-      <Text style={styles.plus}>+</Text>
-    </TouchableOpacity>
+    <Animated.View style={[rBtnStyle]}>
+      <TouchableOpacity style={styles.container} onPress={() => dispatch(setIsShowAddTodoScreen(true))}>
+        <Text style={styles.plus}>+</Text>
+      </TouchableOpacity>
+    </Animated.View>
   );
 };
 
@@ -25,7 +41,7 @@ const styles = StyleSheet.create({
     borderRadius: PAGE_WIDTH * 0.17,
     position: 'absolute',
     zIndex: 3,
-    bottom: PAGE_WIDTH * 0.1,
+    bottom: PAGE_WIDTH * 0.05 + bottom_tabs_height,
     right: PAGE_WIDTH * 0.05,
     alignItems: 'center',
     justifyContent: 'center',

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import Animated, { useAnimatedStyle, useSharedValue, withDelay, withTiming } from "react-native-reanimated";
 import { colors } from "../../../colors";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { setIsMainAppPartLoaded } from "../../../redux/slices/appState";
@@ -14,7 +14,7 @@ interface PageProps {}
 const TodoListScreen: React.FC<PageProps> = () => {
  
   const isMainAppPartLoaded = useAppSelector(state => state.appConfigure.isMainAppPartLoaded)
-  const { showHomeScreen } = animation_duration
+  const { showHomeScreen:duration } = animation_duration
   const dispatch = useAppDispatch()
 
   const width = useSharedValue(0)
@@ -32,20 +32,23 @@ const TodoListScreen: React.FC<PageProps> = () => {
   })
 
   const containerAnimate = () => {
-    width.value = withTiming(PAGE_WIDTH * 0.4, { duration: showHomeScreen })
-    height.value = withTiming(PAGE_WIDTH * 0.4, { duration: showHomeScreen })
+    // 1 animation step
+    width.value = withTiming(PAGE_WIDTH * 0.4, { duration })
+    height.value = withTiming(PAGE_WIDTH * 0.4, { duration })
+    // 2 animation step
+    width.value = withDelay(duration, withTiming(PAGE_WIDTH, { duration }))
+    height.value = withDelay(duration, withTiming(PAGE_HEIGHT, { duration }))
+    borderRadius.value = withDelay(duration, withTiming(0, { duration }))
+    marginBottom.value = withDelay(duration, withTiming(0, { duration }))
 
     setTimeout(() => {
-      width.value = withTiming(PAGE_WIDTH, { duration: showHomeScreen })
-      height.value = withTiming(PAGE_HEIGHT, { duration: showHomeScreen })
-      borderRadius.value = withTiming(0, { duration: showHomeScreen })
-      marginBottom.value = withTiming(0, { duration: showHomeScreen })
       dispatch(setIsMainAppPartLoaded(true))
-    }, showHomeScreen / 2)
+    }, duration * 2)
   }
 
   useEffect(() => {
-     if(!isMainAppPartLoaded) containerAnimate()
+    containerAnimate()
+     if (!isMainAppPartLoaded) containerAnimate()
   }, [])
 
   return ( 
@@ -53,9 +56,9 @@ const TodoListScreen: React.FC<PageProps> = () => {
       styles.container,
       { backgroundColor:  !isMainAppPartLoaded ? colors.orange : colors.white }
     ]}>
-      <Animated.View style={[styles.content, null]}>
-        {/* <Calendar /> */}
-        <TodoList />
+      <Animated.View style={[styles.content, rContainerStyle]}>
+        <Calendar />
+        {/* <TodoList /> */}
         <AddTodoBtn />
       </Animated.View>
     </View> 
@@ -70,9 +73,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   content: {
-    width: '100%',
-    height: '100%',
-
     alignItems: "stretch",
     justifyContent: "space-between",
     backgroundColor: colors.white,
