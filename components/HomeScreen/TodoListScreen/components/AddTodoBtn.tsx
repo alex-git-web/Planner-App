@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     borderRadius: PAGE_WIDTH * 0.17,
     position: 'absolute',
     zIndex: 3,
-    bottom: PAGE_WIDTH * 0.05 + bottom_tabs_height,
+    bottom: PAGE_WIDTH * 0.05 + bottom_tabs_height / 1.5,
     right: PAGE_WIDTH * 0.05,
     alignItems: 'center',
     justifyContent: 'center',

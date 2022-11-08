@@ -10,7 +10,7 @@ const HomeScreenStack = () => {
   return (
     <HomeStack.Navigator
       screenOptions={({ route }) => ({
-        headerShown: false
+        headerShown: false,
       })}
     >
         <HomeStack.Screen name="TodoList" component={TodoListScreen} />

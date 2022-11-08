@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import appStateReducer from './slices/appState'
+import homeScreenReducer from './slices/homeScreenState'
 
 export const store = configureStore({
   reducer: {
     appConfigure: appStateReducer,
+    homeScreen: homeScreenReducer,
   },
 })
 

@@ -1,19 +1,19 @@
 import React, { useEffect } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View, ScrollView, Image } from "react-native";
 import Animated, { useAnimatedStyle, useSharedValue, withDelay, withTiming } from "react-native-reanimated";
 import { colors } from "../../../colors";
+import { images } from "../../../images";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { setIsMainAppPartLoaded } from "../../../redux/slices/appState";
 import { animation_duration, bottom_tabs_height, PAGE_HEIGHT, PAGE_WIDTH } from "../../SplashScreen/others/constants";
 import AddTodoBtn from "./components/AddTodoBtn";
-import Calendar from "./components/Calendar";
-import TodoList from "./components/TodoList";
+import { CalendarContainer } from "./components/CalendarContainer";
+import { TodoListContainer } from "./components/TodoListContainer";
 
 interface PageProps {}
 
 const TodoListScreen: React.FC<PageProps> = () => {
- 
-  const isMainAppPartLoaded = useAppSelector(state => state.appConfigure.isMainAppPartLoaded)
+  const {isMainAppPartLoaded} = useAppSelector(state => state.appConfigure)
   const { showHomeScreen:duration } = animation_duration
   const dispatch = useAppDispatch()
 
@@ -48,18 +48,20 @@ const TodoListScreen: React.FC<PageProps> = () => {
 
   useEffect(() => {
     containerAnimate()
-     if (!isMainAppPartLoaded) containerAnimate()
-  }, [])
+  }, [isMainAppPartLoaded])
 
   return ( 
-    <View style={[
-      styles.container,
-      { backgroundColor:  !isMainAppPartLoaded ? colors.orange : colors.white }
-    ]}>
+    <View style={styles.container}>
+      { !isMainAppPartLoaded ?
+        <Image source={images.home_screen_bg} style={[styles.screen_bg_img]}/>
+        : null
+      }
       <Animated.View style={[styles.content, rContainerStyle]}>
-        <Calendar />
-        {/* <TodoList /> */}
-        <AddTodoBtn />
+        <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1}}>
+          <CalendarContainer />
+          <TodoListContainer />
+          <AddTodoBtn />
+        </ScrollView>
       </Animated.View>
     </View> 
   );
@@ -68,9 +70,15 @@ const TodoListScreen: React.FC<PageProps> = () => {
 const styles = StyleSheet.create({
   container: {
     width: PAGE_WIDTH,
-    height: PAGE_HEIGHT - bottom_tabs_height,
+    height: PAGE_HEIGHT,
     alignItems: "center",
     justifyContent: "center",
+  },
+  screen_bg_img: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    zIndex: -1
   },
   content: {
     alignItems: "stretch",

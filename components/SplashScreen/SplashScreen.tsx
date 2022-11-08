@@ -17,7 +17,7 @@ const SplashScreen: React.FC<PageProps> = () => {
     const {splash_screen_a_duration} = animation_duration
 
     return (
-      <SafeAreaView style={{flex: 1}}>
+      <SafeAreaView style={{width: PAGE_WIDTH, height: PAGE_HEIGHT}}>
         <View style={styles.container}>
             <ImageTop idScreen={idScreen} animation_duration={splash_screen_a_duration} />
             <CaptionMiddle idScreen={idScreen} animation_duration={splash_screen_a_duration} />
