@@ -74,16 +74,16 @@ const styles = StyleSheet.create({
     position: 'absolute',
     zIndex: 1,
     bottom: 0,
-    width: '75%',
-    height: '80%',
+    width: '60%',
+    height: '50%',
   },
   people_img: {
     position: 'absolute',
     zIndex: 1,
-    top: '15%',
-    left: '27%',
-    width: '40%',
-    height: '45%',
+    top: '14%',
+    left: '20%',
+    width: '60%',
+    height: '50%',
   }
 });
 

@@ -1,5 +1,3 @@
-import React from "react"
-import GoldStarSvg from "./assets/svg/GoldStar"
 
 const url = './assets/images/'
 
@@ -12,4 +10,5 @@ export const images = {
     spl_screen_img_3_rocket: require(`${url}spl-screen-img-3-rocket.png`),
     spl_screen_img_3_smallStars: require(`${url}spl-screen-img-3-smallStars.png`),
     spl_screen_img_3_bigStar: require(`${url}spl-screen-img-3-bigStar.png`),
+    home_screen_bg: require(`${url}home_screen_bg.png`),
 }

@@ -62,7 +62,7 @@ const ThirdImage: React.FC<PageProps> = ({
   }
 
   const bigStarAnimate = (duration:number) => {
-    top_bigStar.value = withTiming(20, {duration})
+    top_bigStar.value = withTiming(33, {duration})
     rotate_bigStar.value = withTiming(350, {duration})
   }
 
@@ -132,7 +132,8 @@ const styles = StyleSheet.create({
   },
   bigStar_img: {
     position: 'absolute',
-    right: '38%',
+    zIndex: 3,
+    right: '23%',
     width: '20%',
     height: '20%',
   },

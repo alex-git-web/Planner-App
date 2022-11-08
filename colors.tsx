@@ -1,6 +1,6 @@
 export const colors:any = {
     white: 'rgba(255,255,255,1)',
-    black: 'rgba(70,70,70,1)',
+    black: 'rgba(50,50,50,1)',
     extraLightGray: 'rgba(240,240,240,1)',
     extraLightGray_1: 'rgba(250,250,250,1)',
     lightGray: 'rgba(200,200,200,1)',

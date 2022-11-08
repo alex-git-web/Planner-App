@@ -6,3 +6,7 @@ export const getCurrentDate = () => {
 
     return yyyy + '-' + mm + '-' + dd
 }
+export const getDayName = (dateStr:string, locale:string) =>{
+    var date = new Date(dateStr);
+    return date.toLocaleDateString(locale, { weekday: 'long' }).split(',')[0];        
+}

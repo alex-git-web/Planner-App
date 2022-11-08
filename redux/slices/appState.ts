@@ -3,18 +3,18 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 
 // Define a type for the slice state
 interface AppState {
-    isSplashScreen: boolean
-    isHideSplashScreen: boolean
-    isMainAppPartLoaded: boolean,
-    isShowAddTodoScreen: boolean
+  isSplashScreen: boolean
+  isHideSplashScreen: boolean
+  isMainAppPartLoaded: boolean,
+  isShowAddTodoScreen: boolean
 }
 
 // Define the initial state using that type
 const initialState: AppState = {
-    isSplashScreen: !true,
-    isHideSplashScreen: !false,
-    isMainAppPartLoaded: !false,
-    isShowAddTodoScreen: false
+  isSplashScreen: !true, // !
+  isHideSplashScreen: !false, // !
+  isMainAppPartLoaded: !false,
+  isShowAddTodoScreen: false
 }
 
 export const appStateSlice = createSlice({
