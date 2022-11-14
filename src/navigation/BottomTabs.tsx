@@ -23,7 +23,7 @@ const BottomTabs = () => {
             tabBarShowLabel: false,
             tabBarStyle: {
                 position: 'absolute',
-                height: !isMainAppPartLoaded ? 0 : bottom_tabs_height,
+                height: 0, // !isMainAppPartLoaded ? 0 : bottom_tabs_height,
                 alignContent: 'center',
                 // paddingTop: 10,
                 // paddingBottom: 10,

@@ -1,16 +1,17 @@
 import React, {useEffect} from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
-import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import Animated, { add, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import { colors } from "../../../../../colors";
 import { animation_duration, bottom_tabs_height, PAGE_WIDTH } from "../../../../common/constants";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
-import { setIsShowAddTodoScreen } from "../../../../redux/slices/appState";
+import { setData } from "../../../../redux/slices/homeScreenState";
 
 interface PageProps {}
 
-const AddTodoBtn: React.FC<PageProps> = () => { 
+const AddTodoBtn: React.FC<PageProps> = ({}) => { 
   const {home_screen_elements:a_duration} = animation_duration
   const { isMainAppPartLoaded } = useAppSelector(state => state.appConfigure)
+  const { isShowModal } = useAppSelector(state => state.homeScreen)
 
   const dispatch = useAppDispatch()
   const opacity = useSharedValue(0)
@@ -21,13 +22,30 @@ const AddTodoBtn: React.FC<PageProps> = () => {
     }
   })
 
+  const btnPress = () => {
+    dispatch(setData({
+      key: 'isShowModal',
+      value: true
+    }))
+  }
+
   useEffect(() => {
    if (isMainAppPartLoaded) opacity.value = withTiming(1, {duration: a_duration})
   }, [isMainAppPartLoaded])
+  
+  useEffect(() => {
+    console.log(isShowModal)
+   if (isShowModal) {
+    dispatch(setData({
+      key: 'isOpenModal',
+      value: true
+    }))
+   }
+  }, [isShowModal])
 
   return (
     <Animated.View style={[rBtnStyle]}>
-      <TouchableOpacity style={styles.container} onPress={() => dispatch(setIsShowAddTodoScreen(true))}>
+      <TouchableOpacity style={styles.container} onPress={() => btnPress()}>
         <Text style={styles.plus}>+</Text>
       </TouchableOpacity>
     </Animated.View>

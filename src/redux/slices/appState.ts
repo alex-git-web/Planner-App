@@ -11,9 +11,9 @@ interface AppState {
 
 // Define the initial state using that type
 const initialState: AppState = {
-  isSplashScreen: true, // !
-  isHideSplashScreen: false, // !
-  isMainAppPartLoaded: false,
+  isSplashScreen: !true, // !
+  isHideSplashScreen: !false, // !
+  isMainAppPartLoaded: !false,
   isShowAddTodoScreen: false
 }
 

@@ -100,8 +100,8 @@ const CalendarElement: React.FC<PageProps> = ({
         }}
         key={curSelectedDate}
         current={curSelectedDate}
-        minDate={'2022-01-01'}
-        maxDate={'2033-12-31'}
+        // minDate={'2022-01-01'}
+        // maxDate={'2033-12-31'}
         markingType={'multi-dot'}
         enableSwipeMonths
         theme={{

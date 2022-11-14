@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View, ScrollView, Image } from "react-native";
 import Animated, { useAnimatedStyle, useSharedValue, withDelay, withTiming } from "react-native-reanimated";
 import { colors } from "../../../../colors";
@@ -6,6 +6,7 @@ import { animation_duration, PAGE_HEIGHT, PAGE_WIDTH } from "../../../common/con
 import { images } from "../../../common/images";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { setIsMainAppPartLoaded } from "../../../redux/slices/appState";
+import { TodoAddScreen } from "../TodoAddScreen/TodoAddScreen";
 import AddTodoBtn from "./components/AddTodoBtn";
 import { CalendarContainer } from "./components/CalendarContainer";
 import { TodoListContainer } from "./components/TodoListContainer";
@@ -14,9 +15,9 @@ interface PageProps {}
 
 const TodoListScreen: React.FC<PageProps> = () => {
   const {isMainAppPartLoaded} = useAppSelector(state => state.appConfigure)
+  const {isShowModal} = useAppSelector(state => state.homeScreen)
   const { showHomeScreen:duration } = animation_duration
   const dispatch = useAppDispatch()
-
   const width = useSharedValue(0)
   const height = useSharedValue(0)
   const borderRadius = useSharedValue(PAGE_WIDTH * 0.4)
@@ -63,6 +64,8 @@ const TodoListScreen: React.FC<PageProps> = () => {
         </ScrollView>
       </Animated.View>
       <AddTodoBtn />
+
+      { isShowModal ? <TodoAddScreen /> : null }
     </View> 
   );
 };

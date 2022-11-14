@@ -10,10 +10,11 @@ let idx_todos_counter = 0
 
 export const TodoListElement: React.FC<PageProps> = () => {
   const { curSelectedDate } = useAppSelector(state => state.homeScreen)
+  const { isRenderTodoList } = useAppSelector(state => state.homeScreen)
   const [todoList, setTodoList] = useState<Array<TodoItemType>>([]);
 
-  const renderItem = (todo:TodoItemType, idx: number) => {
-    return todo.event_data.map((event_data:TodoEventDataType, index:number) => {
+  const renderItem = (todo:TodoItemType) => {
+    return todo.event_data.map((event_data:TodoEventDataType) => {
       return <TodoItem 
         key={event_data.id}
         index={++idx_todos_counter}
@@ -24,21 +25,21 @@ export const TodoListElement: React.FC<PageProps> = () => {
   }
 
   const getTodoListFromStorage = async () => {
-    const item = await getTodoListAsyncStorage();
-    setTodoList(item);
+    const items = await getTodoListAsyncStorage();
+    setTodoList(items);
   };
 
   useEffect(() => {
     getTodoListFromStorage();
-  }, []);
+  }, [isRenderTodoList]);
 
   const todos = useMemo(() => {
     idx_todos_counter = 0
-    return todoList.map((todo, index) => {
+    return todoList.map((todo) => {
       if (todo.event_date === curSelectedDate)
-      return renderItem(todo, index)
+      return renderItem(todo)
     })
-  }, [curSelectedDate])
+  }, [curSelectedDate, todoList])
   
   return (
     <View style={styles.container}>
