@@ -1,9 +1,6 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import Animated, {
-  useAnimatedStyle,
-  withTiming,
-} from 'react-native-reanimated';
+import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import { colors } from '../../../../../../../colors';
 
 interface DotProps {

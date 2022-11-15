@@ -8,7 +8,6 @@ interface HomeScreenState {
   curSelectedDate: string,
   curSelectedMonth: string,
   isRenderTodoList: boolean,
-  isShowModal: boolean,
   isOpenModal: boolean,
 }
 
@@ -17,7 +16,6 @@ const initialState: HomeScreenState = {
   curSelectedDate: TODAY_DATE, // year, month, day
   curSelectedMonth: TODAY_DATE, // year, month
   isRenderTodoList: false,
-  isShowModal: false,
   isOpenModal: false,
 }
 
@@ -42,9 +40,6 @@ export const homeScreenSlice = createSlice({
         break
         case 'isRenderTodoList':  
           state.isRenderTodoList = action.payload.value
-        break
-        case 'isShowModal':  
-          state.isShowModal = action.payload.value
         break
         case 'isOpenModal':  
           state.isOpenModal = action.payload.value

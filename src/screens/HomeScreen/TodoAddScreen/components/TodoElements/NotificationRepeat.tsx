@@ -6,15 +6,23 @@ import { PAGE_HEIGHT } from "../../../../../common/constants";
 import { ModalElement } from "./componets/ModalElement";
 import { items_repeat_state } from "./others/constants";
 
-interface PageProps {}
+interface PageProps {
+  activeNotificationRepeatStateItemIdx:number,
+  setActiveNotificationRepeatStateItemIdx:Function
+}
 
-export const NotificationRepeat: React.FC<PageProps> = () => {
+export const NotificationRepeat: React.FC<PageProps> = ({
+  activeNotificationRepeatStateItemIdx,
+  setActiveNotificationRepeatStateItemIdx
+}) => {
   
   return (
     <View style={styles.container}>
       <ModalElement 
           items={items_repeat_state}
           caption={'Repeat'}
+          activeItemIdx={activeNotificationRepeatStateItemIdx}
+          setActiveItemIdx={setActiveNotificationRepeatStateItemIdx}
           icon={
             <Feather name="repeat" size={20} color={colors.black} style={{marginRight: '5%'}} />
           }

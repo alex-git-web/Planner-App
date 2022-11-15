@@ -13,10 +13,11 @@ import { TodoListContainer } from "./components/TodoListContainer";
 
 interface PageProps {}
 
-const TodoListScreen: React.FC<PageProps> = () => {
+export const HomeScreen: React.FC<PageProps> = () => {
+  const [isShowModal, setIsShowModal] = useState<boolean>(false)
   const {isMainAppPartLoaded} = useAppSelector(state => state.appConfigure)
-  const {isShowModal} = useAppSelector(state => state.homeScreen)
-  const { showHomeScreen:duration } = animation_duration
+  const {isOpenModal} = useAppSelector(state => state.homeScreen)
+  const { splash_screen_hiding:duration } = animation_duration
   const dispatch = useAppDispatch()
   const width = useSharedValue(0)
   const height = useSharedValue(0)
@@ -51,6 +52,10 @@ const TodoListScreen: React.FC<PageProps> = () => {
     containerAnimate()
   }, [])
 
+  useEffect(() => {
+    if (isOpenModal) setIsShowModal(true)
+  }, [isOpenModal])
+
   return ( 
     <View style={styles.container}>
       { !isMainAppPartLoaded ?
@@ -63,9 +68,9 @@ const TodoListScreen: React.FC<PageProps> = () => {
           <TodoListContainer />
         </ScrollView>
       </Animated.View>
-      <AddTodoBtn />
+      <AddTodoBtn setIsShowModal={setIsShowModal} />
 
-      { isShowModal ? <TodoAddScreen /> : null }
+      { isShowModal ? <TodoAddScreen isShowModal={isShowModal} setIsShowModal={setIsShowModal} /> : null }
     </View> 
   );
 };
@@ -89,5 +94,3 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
   },
 });
-
-export default TodoListScreen;

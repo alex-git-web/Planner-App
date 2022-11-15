@@ -8,16 +8,19 @@ import { PAGE_HEIGHT } from "../../../../../../common/constants";
 interface PageProps {
   items: Array<string>,
   caption: string,
+  activeItemIdx:number
+  setActiveItemIdx:Function
   icon: any
 }
 
 export const ModalElement: React.FC<PageProps> = ({
   items,
   caption,
+  activeItemIdx,
+  setActiveItemIdx,
   icon
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false) 
-  const [activeItemIdx, setActiveItemIdx] = useState<number>(0) 
 
   return (
     <View style={styles.container}>

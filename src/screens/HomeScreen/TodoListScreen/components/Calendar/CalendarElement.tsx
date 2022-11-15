@@ -27,7 +27,7 @@ const CalendarElement: React.FC<PageProps> = ({
   setIsShowSelectModal
 }) => {
   const dispatch = useAppDispatch()
-  const { curSelectedDate, curSelectedMonth } = useAppSelector(state => state.homeScreen)
+  const { isRenderTodoList, curSelectedDate, curSelectedMonth } = useAppSelector(state => state.homeScreen)
   const [todoList, setTodoList] = useState<Array<TodoItemType>>();
 
   const marks = useMemo(() => {
@@ -89,7 +89,7 @@ const CalendarElement: React.FC<PageProps> = ({
 
   useEffect(() => {
     getTodoListFromStorage();
-  }, []);
+  }, [isRenderTodoList]);
 
   const renderCalendarWithSelectableDate = () => {
     return (

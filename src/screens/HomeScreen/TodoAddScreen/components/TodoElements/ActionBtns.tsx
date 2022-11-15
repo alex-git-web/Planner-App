@@ -4,14 +4,30 @@ import { colors } from "../../../../../../colors";
 import { animation_duration, PAGE_HEIGHT } from "../../../../../common/constants";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/hooks";
 import { setData } from "../../../../../redux/slices/homeScreenState";
+import { addTodoAsyncStorage } from "../../../others/asyncStorage";
+import { todoCompleteStatus } from "../../../others/constants";
+import { items_task_time } from "./others/constants";
 
-interface PageProps {}
+interface PageProps {
+  checkedDate:string,
+  taskText:string,
+  activeTaskTimeItemIdx:number
+  activeNotificationTimeItemIdx:number
+  activeNotificationRepeatStateItemIdx:number
+}
 
-export const ActionBtns: React.FC<PageProps> = () => {
+export const ActionBtns: React.FC<PageProps> = ({
+  checkedDate,
+  taskText,
+  activeTaskTimeItemIdx,
+  activeNotificationTimeItemIdx,
+  activeNotificationRepeatStateItemIdx
+}) => {
   const { modal_add_todo:a_duration } = animation_duration
   const { isRenderTodoList } = useAppSelector(state => state.homeScreen)
   const dispatch = useAppDispatch()
 
+  console.log()
   const cancel = () => {
     dispatch(setData({
       key: 'isOpenModal',
@@ -26,21 +42,34 @@ export const ActionBtns: React.FC<PageProps> = () => {
   }
   
   const add = () => {
-    dispatch(setData({
-      key: 'isOpenModal',
-      value: false
-    }))
+    const date = new Date(checkedDate)
+    const todo = { 
+        event_date: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
+        event_data: [
+        {
+            id: Date.now(), 
+            title: taskText,
+            direction: 'Don\'t forget to add a graph the...',
+            eventTime: items_task_time[activeTaskTimeItemIdx],
+            status: todoCompleteStatus.inProcess
+        },
+        ]
+      }
 
-    setTimeout(() => {
-      dispatch(setData({
-        key: 'isRenderTodoList',
-        value: !isRenderTodoList
-      }))
-      dispatch(setData({
-        key: 'isShowModal',
-        value: false
-      }))
-    }, a_duration)
+      const res:any = addTodoAsyncStorage(todo)
+      if (res) {
+        dispatch(setData({
+          key: 'isOpenModal',
+          value: false
+        }))
+
+        setTimeout(() => {
+          dispatch(setData({
+            key: 'isRenderTodoList',
+            value: !isRenderTodoList
+          }))
+        }, a_duration)
+      }
   }
 
   return (

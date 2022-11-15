@@ -12,3 +12,5 @@ export const items_notification_time: Array<string> = [
 export const items_repeat_state: Array<string> = [
    'Yes', 'No' 
 ]
+
+export const options:any = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
