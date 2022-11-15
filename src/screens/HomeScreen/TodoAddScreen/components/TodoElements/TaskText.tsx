@@ -2,17 +2,23 @@ import React, {useState} from "react";
 import { StyleSheet, View, TextInput } from "react-native";
 import { colors } from "../../../../../../colors";
 
-interface PageProps {}
+interface PageProps {
+  taskText:string, 
+  onChangeTaskText:any
 
-export const TaskText: React.FC<PageProps> = () => {
-  const [text, onChangeText] = useState<string>()
+}
+
+export const TaskText: React.FC<PageProps> = ({
+  taskText, 
+  onChangeTaskText
+}) => {
 
   return (
     <View style={styles.container}>
       <TextInput
         style={styles.text_input}
-        onChangeText={onChangeText}
-        value={text}
+        onChangeText={onChangeTaskText}
+        value={taskText}
         placeholder="Write a task"
         keyboardType="default"
       />

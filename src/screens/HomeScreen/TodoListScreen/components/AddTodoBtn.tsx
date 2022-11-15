@@ -6,12 +6,15 @@ import { animation_duration, bottom_tabs_height, PAGE_WIDTH } from "../../../../
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { setData } from "../../../../redux/slices/homeScreenState";
 
-interface PageProps {}
+interface PageProps {
+  setIsShowModal:Function
+}
 
-const AddTodoBtn: React.FC<PageProps> = ({}) => { 
+const AddTodoBtn: React.FC<PageProps> = ({
+  setIsShowModal
+}) => { 
   const {home_screen_elements:a_duration} = animation_duration
   const { isMainAppPartLoaded } = useAppSelector(state => state.appConfigure)
-  const { isShowModal } = useAppSelector(state => state.homeScreen)
 
   const dispatch = useAppDispatch()
   const opacity = useSharedValue(0)
@@ -24,7 +27,7 @@ const AddTodoBtn: React.FC<PageProps> = ({}) => {
 
   const btnPress = () => {
     dispatch(setData({
-      key: 'isShowModal',
+      key: 'isOpenModal',
       value: true
     }))
   }
@@ -32,16 +35,6 @@ const AddTodoBtn: React.FC<PageProps> = ({}) => {
   useEffect(() => {
    if (isMainAppPartLoaded) opacity.value = withTiming(1, {duration: a_duration})
   }, [isMainAppPartLoaded])
-  
-  useEffect(() => {
-    console.log(isShowModal)
-   if (isShowModal) {
-    dispatch(setData({
-      key: 'isOpenModal',
-      value: true
-    }))
-   }
-  }, [isShowModal])
 
   return (
     <Animated.View style={[rBtnStyle]}>

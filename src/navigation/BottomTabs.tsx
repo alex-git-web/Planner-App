@@ -3,17 +3,18 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import SettingsScreen from '../screens/SettingsScreen/SettingsScreen';
-import HomeScreenStack from './HomeScreenStack';
 import { colors } from '../../colors';
 import FilesScreen from '../screens/FilesScreen/FilesScreen';
 import { BottomTabNavigatorParamList } from './types';
 import { useAppSelector } from '../redux/hooks';
 import { bottom_tabs_height } from '../common/constants';
+import { HomeScreen } from '../screens/HomeScreen/TodoListScreen/TodoListScreen';
 
 const Tab = createBottomTabNavigator<BottomTabNavigatorParamList>();
 
 const BottomTabs = () => {
-    const isMainAppPartLoaded = useAppSelector(state => state.appConfigure.isMainAppPartLoaded)
+    const { isMainAppPartLoaded } = useAppSelector(state => state.appConfigure)
+    const { isOpenModal } = useAppSelector(state => state.homeScreen)
 
     return (
         <Tab.Navigator
@@ -23,7 +24,7 @@ const BottomTabs = () => {
             tabBarShowLabel: false,
             tabBarStyle: {
                 position: 'absolute',
-                height: 0, // !isMainAppPartLoaded ? 0 : bottom_tabs_height,
+                height: !isMainAppPartLoaded || isOpenModal ? 0 : bottom_tabs_height,
                 alignContent: 'center',
                 // paddingTop: 10,
                 // paddingBottom: 10,
@@ -61,11 +62,7 @@ const BottomTabs = () => {
         })}
         >
             <Tab.Screen name="Files" component={FilesScreen} />
-            <Tab.Screen
-                name="Home"
-                component={HomeScreenStack}
-                options={{ headerShown: false }}
-            />
+            <Tab.Screen name="Home" component={HomeScreen} options={{ headerShown: false }}/>
             <Tab.Screen name="Settings" component={SettingsScreen} />
         </Tab.Navigator>
     );

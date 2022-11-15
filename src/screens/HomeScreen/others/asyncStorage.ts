@@ -22,13 +22,15 @@ export const getTodoListAsyncStorage = async () => {
     }
 };
 
-export const addTodoAsyncStorage = async (newTodo:TodoItemType) => {
+export const addTodoAsyncStorage = async (newTodo:TodoItemType):Promise<boolean> => {
     const todo_list = await getTodoListAsyncStorage()
     if (todo_list) {
         todo_list.push(newTodo)
         setTodoListAsyncStorage(todo_list)
+        return true
     }
    
+    return false
     // AsyncStorage.removeItem('@todo_list', (err) => {
     //     console.warn("Async Storage: an error occurred while removing data: " , err)
     //     return

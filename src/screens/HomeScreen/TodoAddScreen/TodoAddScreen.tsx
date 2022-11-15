@@ -8,15 +8,30 @@ import { ActionBtns } from "./components/TodoElements/ActionBtns";
 import { CalendarPart } from "./components/TodoElements/CalendarPart";
 import { NotificationRepeat } from "./components/TodoElements/NotificationRepeat";
 import { NotificationTime } from "./components/TodoElements/NotificationTime";
+import { options } from "./components/TodoElements/others/constants";
 import { TaskText } from "./components/TodoElements/TaskText";
 import { TaskTime } from "./components/TodoElements/TaskTime";
 
-interface PageProps {}
+interface PageProps {
+  isShowModal: boolean,
+  setIsShowModal: Function
+}
 
-export const TodoAddScreen: React.FC<PageProps> = () => { 
+export const TodoAddScreen: React.FC<PageProps> = ({
+  isShowModal,
+  setIsShowModal
+}) => { 
+  const { curSelectedDate } = useAppSelector(state => state.homeScreen)
+  // Form elements data
+  const [checkedDate, setCheckedDate] = useState<string>(new Date(curSelectedDate).toLocaleDateString('en-GB', options))
+  const [taskText, onChangeTaskText] = useState<string>("")
+  const [activeTaskTimeItemIdx, setActiveTaskTimeItemIdx] = useState<number>(0) 
+  const [activeNotificationTimeItemIdx, setActiveNotificationTimeItemIdx] = useState<number>(0) 
+  const [activeNotificationRepeatStateItemIdx, setActiveNotificationRepeatStateItemIdx] = useState<number>(0) 
+  /*..............................................*/
   const { modal_add_todo:a_duration } = animation_duration
   const { isOpenModal } = useAppSelector(state => state.homeScreen)
-  const backgroundColor_container = useSharedValue(0)
+  const backgroundColor_container = useSharedValue(0.5)
   const marginTop_content = useSharedValue(PAGE_HEIGHT)
   const width_content = useSharedValue(PAGE_WIDTH * 0.7)
 
@@ -34,15 +49,18 @@ export const TodoAddScreen: React.FC<PageProps> = () => {
   })
 
   useEffect(() => {
-    if (isOpenModal) {
+    if (isShowModal) {
       backgroundColor_container.value = withTiming(0.5, {duration: a_duration})
       marginTop_content.value = withTiming(PAGE_HEIGHT * 0.05, {duration: a_duration})
-      width_content.value = withTiming(PAGE_WIDTH, {duration: a_duration})
+      width_content.value = withTiming(PAGE_WIDTH, {duration: a_duration})   
     }
-    else {
+  }, [isShowModal])
+
+  useEffect(() => {
+    if (!isOpenModal) {
       backgroundColor_container.value = withTiming(0, {duration: a_duration})
       marginTop_content.value = withTiming(PAGE_HEIGHT, {duration: a_duration})
-      width_content.value = withDelay(a_duration * 2, withTiming(PAGE_WIDTH * 0.7, {duration: a_duration}))
+      setTimeout(() => setIsShowModal(false), a_duration)
     }
   }, [isOpenModal])
 
@@ -55,15 +73,21 @@ export const TodoAddScreen: React.FC<PageProps> = () => {
 
         <View style={styles.content_view}>
           <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
-            <CalendarPart selectedDate={'2022-11-03'} />
-            <TaskText />
-            <TaskTime />
-            <NotificationTime />
-            <NotificationRepeat />
+            <CalendarPart checkedDate={checkedDate} setCheckedDate={setCheckedDate}/>
+            <TaskText taskText={taskText} onChangeTaskText={onChangeTaskText}/>
+            <TaskTime activeTaskTimeItemIdx={activeTaskTimeItemIdx} setActiveTaskTimeItemIdx={setActiveTaskTimeItemIdx}/>
+            <NotificationTime activeNotificationTimeItemIdx={activeNotificationTimeItemIdx} setActiveNotificationTimeItemIdx={setActiveNotificationTimeItemIdx}/>
+            <NotificationRepeat activeNotificationRepeatStateItemIdx={activeNotificationRepeatStateItemIdx} setActiveNotificationRepeatStateItemIdx={setActiveNotificationRepeatStateItemIdx}/>
           </ScrollView>
         </View>
 
-        <ActionBtns />
+        <ActionBtns 
+          checkedDate={checkedDate}
+          taskText={taskText}
+          activeTaskTimeItemIdx={activeTaskTimeItemIdx}
+          activeNotificationTimeItemIdx={activeNotificationTimeItemIdx}
+          activeNotificationRepeatStateItemIdx={activeNotificationRepeatStateItemIdx}
+        />
       </Animated.View>
     </Animated.View>
   );

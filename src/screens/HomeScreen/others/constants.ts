@@ -1,4 +1,3 @@
-
 export type TodoEventDataType = {
     id: number, 
     title: string,

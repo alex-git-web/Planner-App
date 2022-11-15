@@ -2,9 +2,14 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { colors } from "../../../../../../colors";
 import { PAGE_HEIGHT, PAGE_WIDTH } from "../../../../../common/constants";
+import { useAppSelector } from "../../../../../redux/hooks";
+import { monthNames } from "../../../TodoListScreen/components/Calendar/others/configure";
+import { getDayName } from "../../../TodoListScreen/components/Calendar/others/functions";
+import { options } from "./others/constants";
 
 interface PageProps {
-  selectedDate?: string | any,
+  checkedDate:string, 
+  setCheckedDate:Function
 }
 
 type DateElement = {
@@ -13,21 +18,21 @@ type DateElement = {
   dateNum: string,
 }
 
-const options:any = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-
 export const CalendarPart: React.FC<PageProps> = ({
-  selectedDate,
+  checkedDate,
+  setCheckedDate
 }) => {
-  const selected_date = new Date(selectedDate).toLocaleDateString(undefined, options)
+  const { curSelectedDate } = useAppSelector(state => state.homeScreen)
+  // const selected_date = new Date(selectedDate).toLocaleDateString(undefined, options)
   const [headerCaption, setHeaderCaption] = useState<string>()
-  const [checkedDate, setCheckedDate] = useState<string>(selected_date)
+
   const [dates, setDates] = useState<Array<DateElement>>()
 
   const generateDatesRow = () => {
-    const curDate = new Date(selectedDate) // ex:'2022-11-03'
-    const f = (p:any) => (p).toLocaleDateString(undefined, options)
+    const curDate = new Date(curSelectedDate) // ex:'2022-11-03'
+    const f = (p:any) => (p).toLocaleDateString('en-GB', options)
     const dates = []
-    let prevDate = new Date(curDate)
+    let prevDate = new Date(curSelectedDate)
 
     for (let i = 0; i < curDate.getDay() - 1; i++) {
       prevDate.setDate(prevDate.getDate() - 1)
@@ -44,19 +49,20 @@ export const CalendarPart: React.FC<PageProps> = ({
       dates.push(f(prevDate))
     }
     // ex: ["31.10.2022", "01.11.2022", "02.11.2022", "03.11.2022", "04.11.2022", "05.11.2022", "06.11.2022"]
-   
+  
     return dates.map(date => {
       return {
         date,
-        shortDayName: date.split(',')[0][0],
-        dateNum: date.split(', ')[1].split(' ')[1]
+        shortDayName: getDayName(date, 'en-GB')[0],
+        dateNum: new Date(date).getDate().toString()
       }
     })
   }
 
   useEffect(() => {
+    const d = new Date(curSelectedDate)
     setHeaderCaption(
-      `${selected_date.split(', ')[1].split(' ')[0]}, ${selected_date.split(', ')[2]}`
+      `${monthNames[d.getMonth()]}, ${d.getFullYear()}`
     )
     setDates(generateDatesRow())
   }, [])

@@ -120,13 +120,13 @@ const styles = StyleSheet.create({
   },
   rocket_img: {
     position: 'absolute',
-    zIndex: 3,
+    zIndex: 2,
     width: PAGE_WIDTH * 0.6,
     height: PAGE_WIDTH * 0.6,
   },
   smallStars_img: {
     position: 'absolute',
-    zIndex: -1,
+    zIndex: 1,
     width: '100%',
     height: '100%',
   },
