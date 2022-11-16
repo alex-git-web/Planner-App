@@ -4,8 +4,9 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Animated, { useAnimatedStyle, useSharedValue, withDelay, withTiming } from "react-native-reanimated";
 import { colors } from "../../../../../../../colors";
 import { animation_duration, PAGE_WIDTH } from "../../../../../../common/constants";
-import { useAppSelector } from "../../../../../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../../../../../redux/hooks";
 import { todoCompleteStatus, TodoEventDataType, TodoItemType } from "../../../../others/constants";
+import { setData } from "../../../../../../redux/slices/homeScreenState";
 
 interface PageProps {
  index: number,
@@ -22,6 +23,8 @@ const TodoItem: React.FC<PageProps> = ({
   item_event_data,
   deleteItem
 }) => {
+  const dispatch = useAppDispatch()
+  const { isRenderTodoList } = useAppSelector(state => state.homeScreen)
   const { isMainAppPartLoaded } = useAppSelector(state => state.appConfigure)
   const top_item = useSharedValue(100)
   const opacity_item = useSharedValue(0)
@@ -88,6 +91,23 @@ const TodoItem: React.FC<PageProps> = ({
     )
   }
 
+  const deleteBtnPress = async () => {
+    const res = await deleteItem({
+      event_date: item_event_date, 
+      event_data: [item_event_data]
+    })
+
+    if (res) {
+      opacity_item.value = withTiming(0, { duration: a_duration })
+      setTimeout(() => {
+        dispatch(setData({
+          key: 'isRenderTodoList',
+          value: !isRenderTodoList
+        }))
+      }, a_duration)
+    }
+  }
+
   useEffect(() => {
     if (isMainAppPartLoaded) {
       showItemAnimate(a_duration * itemIndex) // * itemIndex
@@ -122,10 +142,7 @@ const TodoItem: React.FC<PageProps> = ({
         </Animated.View>
 
         <TouchableOpacity style={styles.delete_btn} activeOpacity={0.7} 
-          onPress={() => deleteItem({
-            event_date: item_event_date, 
-            event_data: [item_event_data]
-          })}>
+          onPress={() => deleteBtnPress() }>
           <MaterialIcons name="delete-outline" size={24} color={colors.lightGrayDarker} />
         </TouchableOpacity>
      </TouchableOpacity>
