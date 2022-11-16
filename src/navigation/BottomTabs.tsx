@@ -26,8 +26,6 @@ const BottomTabs = () => {
                 position: 'absolute',
                 height: !isMainAppPartLoaded || isOpenModal ? 0 : bottom_tabs_height,
                 alignContent: 'center',
-                // paddingTop: 10,
-                // paddingBottom: 10,
                 backgroundColor: 'white',
                 shadowColor: colors.black,
                 shadowOffset: {

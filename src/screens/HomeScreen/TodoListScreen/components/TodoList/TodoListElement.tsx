@@ -11,21 +11,12 @@ interface PageProps {}
 let idx_todos_counter = 0
 
 export const TodoListElement: React.FC<PageProps> = () => {
-  const dispatch = useAppDispatch()
   const { curSelectedDate } = useAppSelector(state => state.homeScreen)
   const { isRenderTodoList } = useAppSelector(state => state.homeScreen)
   const [todoList, setTodoList] = useState<Array<TodoItemType>>([]);
 
   const deleteItem = async (todo:TodoItemType) => {
-    const res:any = await removeTodoAsyncStorage(todo)
-    if (res)
-    {
-      dispatch(setData({
-        key: 'isRenderTodoList',
-        value: !isRenderTodoList
-      }))
-    }
-    // исчезновение
+    return await removeTodoAsyncStorage(todo)
   } 
 
   const renderItem = (todo:TodoItemType) => {

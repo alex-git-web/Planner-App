@@ -24,7 +24,7 @@ export const HomeScreen: React.FC<PageProps> = () => {
   const borderRadius = useSharedValue(PAGE_WIDTH * 0.4)
   const marginBottom = useSharedValue(PAGE_HEIGHT * 0.7)
 
-  const rContainerStyle = useAnimatedStyle(() => {
+  const rContentStyle = useAnimatedStyle(() => {
     return {
       width: width.value,
       height: height.value,
@@ -62,7 +62,7 @@ export const HomeScreen: React.FC<PageProps> = () => {
         <Image source={images.home_screen_bg} style={[styles.screen_bg_img]}/>
         : null
       }
-      <Animated.View style={[styles.content, rContainerStyle]}>
+      <Animated.View style={[styles.content, rContentStyle]}>
         <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1}}>
           <CalendarContainer />
           <TodoListContainer />
