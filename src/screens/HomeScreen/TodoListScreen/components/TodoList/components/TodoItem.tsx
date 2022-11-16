@@ -1,22 +1,26 @@
 import React, { useEffect } from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Animated, { useAnimatedStyle, useSharedValue, withDelay, withTiming } from "react-native-reanimated";
 import { colors } from "../../../../../../../colors";
-import { animation_duration } from "../../../../../../common/constants";
+import { animation_duration, PAGE_WIDTH } from "../../../../../../common/constants";
 import { useAppSelector } from "../../../../../../redux/hooks";
-import { todoCompleteStatus, TodoEventDataType } from "../../../../others/constants";
+import { todoCompleteStatus, TodoEventDataType, TodoItemType } from "../../../../others/constants";
 
 interface PageProps {
  index: number,
+ item_event_date: string,
  item_event_data: TodoEventDataType,
- todoListLenght: number
+ deleteItem: Function
 }
 
 const { todo_list_item:a_duration } = animation_duration
 
 const TodoItem: React.FC<PageProps> = ({
   index:itemIndex, 
+  item_event_date,
   item_event_data,
+  deleteItem
 }) => {
   const { isMainAppPartLoaded } = useAppSelector(state => state.appConfigure)
   const top_item = useSharedValue(100)
@@ -116,6 +120,14 @@ const TodoItem: React.FC<PageProps> = ({
         <Animated.View style={[rItemPartsStyle.eventDate]}>
           <Text style={styles.item_event_date}>{item_event_data.eventTime}</Text>
         </Animated.View>
+
+        <TouchableOpacity style={styles.delete_btn} activeOpacity={0.7} 
+          onPress={() => deleteItem({
+            event_date: item_event_date, 
+            event_data: [item_event_data]
+          })}>
+          <MaterialIcons name="delete-outline" size={24} color={colors.lightGrayDarker} />
+        </TouchableOpacity>
      </TouchableOpacity>
     </Animated.View>
   )
@@ -156,6 +168,18 @@ const styles = StyleSheet.create({
     color: colors.black,
     fontWeight: '400'
   },
+  delete_btn: {
+    position: 'absolute',
+    zIndex: 3,
+    right: 10,
+    top: 10,
+    width: PAGE_WIDTH * 0.13,
+    height: PAGE_WIDTH * 0.13,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: colors.white,
+    borderRadius: PAGE_WIDTH * 0.13,
+  }
 });
 
 export default TodoItem;

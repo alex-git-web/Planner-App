@@ -27,7 +27,6 @@ export const ActionBtns: React.FC<PageProps> = ({
   const { isRenderTodoList } = useAppSelector(state => state.homeScreen)
   const dispatch = useAppDispatch()
 
-  console.log()
   const cancel = () => {
     dispatch(setData({
       key: 'isOpenModal',
@@ -41,7 +40,7 @@ export const ActionBtns: React.FC<PageProps> = ({
     }, a_duration)
   }
   
-  const add = () => {
+  const add = async () => {
     const date = new Date(checkedDate)
     const todo = { 
         event_date: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
@@ -56,7 +55,7 @@ export const ActionBtns: React.FC<PageProps> = ({
         ]
       }
 
-      const res:any = addTodoAsyncStorage(todo)
+      const res:any = await addTodoAsyncStorage(todo)
       if (res) {
         dispatch(setData({
           key: 'isOpenModal',
